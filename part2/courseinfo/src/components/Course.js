@@ -25,9 +25,7 @@ const Content = ({course}) => {
   return (
     <>
       <h3>{course.name}</h3>
-      <div>
-        {course.parts.map(part => <Part key={part.id} part={part} />)}
-      </div>
+      {course.parts.map(part => <Part key={part.id} part={part} />)}
       <Total course={course} />
     </>
   )
