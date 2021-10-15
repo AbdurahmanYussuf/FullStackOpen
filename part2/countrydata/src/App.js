@@ -5,8 +5,7 @@ import axios from 'axios'
 const App = () => {
   const [countries, setCountries] = useState([])
   const [filter, setFilter] = useState('')
-  // let [countriesToShow, setCountriesToShow] = useState()
-  let bool = false;
+  
   useEffect(() => {
     axios
       .get('https://restcountries.com/v3.1/all')
@@ -16,7 +15,6 @@ const App = () => {
   }, [])
 
   const showCountry = (country) => {
-    // return filterArr.map((country) => {
       return(
      <>
         <h2>{country.name.common}</h2>
@@ -30,7 +28,6 @@ const App = () => {
 
      </> 
       )
-    // })
   }
 
   const filterCountry = (event) => {
@@ -63,23 +60,5 @@ const App = () => {
   )
 }
 
-const Button = ({handleAction}) => {
-  return(
-    <button onClick={handleAction}
-    >show</button>
-  )
-}
-
-const Country = ({name}) => {
-  return(
-    <>
-      <span>{name}</span>
-      {/* <button onClick={() => 
-         console.log(handleAction)
-      }
-      >show</button><br/> */}
-    </>
-  )
-} 
 
 export default App;
