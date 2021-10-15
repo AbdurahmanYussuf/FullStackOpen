@@ -9,7 +9,7 @@ const App = () => {
   let bool = false;
   useEffect(() => {
     axios
-      .get('https://restcountries.eu/rest/v2/all')
+      .get('https://restcountries.com/v3.1/all')
       .then(response => {
         setCountries(response.data)
       })
@@ -19,14 +19,15 @@ const App = () => {
     // return filterArr.map((country) => {
       return(
      <>
-        <h2>{country.name}</h2>
+        <h2>{country.name.common}</h2>
         <div>Capital: {country.capital}</div>
         <div>Population: {country.population}</div>
         <h3>Languages</h3>
         <ul>
-          {country.languages.map((language) => <li>{language.name}</li>)}
+          {Object.values(country.languages).map((language) => <li>{language}</li>)}
         </ul>
-        <img src={country.flag} height="250" alt="flag"/>
+        <img src={country.flags.png} height="250" alt="flag"/>
+
      </> 
       )
     // })
@@ -36,17 +37,18 @@ const App = () => {
     setFilter(event.target.value);
   }
 
-  const handleClick = () => {
-    bool = true;
-    
-  }
-
-  const filterArr = countries.filter(country => country.name.toUpperCase().includes(filter.toUpperCase()));
-
-   let countriesToShow = filter === '' ? '' : (
-    filterArr.length > 10 ? 'Too many matches, specify another filter' : filterArr.length === 1 ? filterArr.map(country => showCountry(country)) 
-    : filterArr.map((country, i) =><> <Country key={i}  name={country.name} /> <button onClick={() => countriesToShow = ''} >show</button><br/> </>)  
-    )
+  const filterArr = countries.filter(country => country.name.common.toUpperCase().includes(filter.toUpperCase()));
+  console.log(filterArr);
+   
+    let countriesToShow;
+    if(filter === ''){
+      countriesToShow = '';
+    } else if(filterArr.length > 1) {
+      countriesToShow = 'Too many matches, specify another filter';
+    }
+    else{
+      countriesToShow = filterArr.map(country => showCountry(country));
+    }
 
   return(
     <div>
