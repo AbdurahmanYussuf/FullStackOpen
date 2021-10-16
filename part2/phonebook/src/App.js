@@ -78,6 +78,8 @@ const App = () => {
         })
     }
   }
+  
+  
 
   const handleName = (event) => setNewName(event.target.value)
 
