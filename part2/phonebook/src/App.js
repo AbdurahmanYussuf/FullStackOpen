@@ -28,7 +28,7 @@ const App = () => {
     
     let addPerson = true;
     for(let i = 0; i < persons.length; i++){
-      if(persons[i].name.toUpperCase().includes(newName.toUpperCase().trim())){
+      if(persons[i].name.toUpperCase() === (newName.toUpperCase().trim())){
         const confirm = window.confirm(`${persons[i].name} already exists in phonebook, replace the old number with a new one?`)
         const updatedObject = {...persons[i], number: newNumber}  
          
@@ -46,13 +46,24 @@ const App = () => {
               setNewNumber('')
           })
           .catch(error => {
-            setErrorMessage(`${updatedObject.name} was already deleted from the Phonebook`)
-            setTimeout(() => {
-              setErrorMessage(null)
-            }, 5000)
-            setPersons(persons.filter(person => person.id !== updatedObject.id))
-            setNewName('')
-            setNewNumber('')
+            if( error.response.data.error.name === 'ValidationError'){
+              setErrorMessage(`${JSON.stringify(error.response.data.error.message)}`)
+              setTimeout(() => {
+                setErrorMessage(null)
+              }, 5000)
+              setNewName('')
+              setNewNumber('')
+            }
+            else{
+              setErrorMessage(`${updatedObject.name} was already deleted from the Phonebook`)
+              console.log(error.response.data.error.name)
+              setTimeout(() => {
+                setErrorMessage(null)
+              }, 5000)
+              setPersons(persons.filter(person => person.id !== updatedObject.id))
+              setNewName('')
+              setNewNumber('')
+            }
           })
         }
         else{
@@ -72,6 +83,15 @@ const App = () => {
           setMessage(`${newName} has been added to Phonebook`)
           setTimeout(() => {
             setMessage(null)
+          }, 5000)
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          setErrorMessage(`${JSON.stringify(error.response.data.error.message)}`)
+          // console.log(error.response.data)
+          setTimeout(() => {
+            setErrorMessage(null)
           }, 5000)
           setNewName('')
           setNewNumber('')
