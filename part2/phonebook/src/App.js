@@ -133,10 +133,11 @@ const App = () => {
       <h2>Phonebook</h2>
       <SuccessNotification message={message} />
       <ErrorNotification errorMessage={errorMessage} />
-        <Filter text="filter shown with" handleAction={handleFilter} />
-        <h3>Add a new</h3>
+        <Filter text="Search contact " handleAction={handleFilter} />
+        <h3>Add a new contact:</h3>
+        <h4><i>Number must contain minimun of 8 digits in the format 123-456789 or 12-3456789</i></h4>
       <Form addPerson={addPerson} newNumber={newNumber} handleNumber={handleNumber} newName={newName} handleName={handleName} />
-      <h2>Numbers</h2>
+      <h3><u>Contacts</u></h3>
         <Persons namesToShow={namesToShow} handleAction={handleDelete} />
     </div>
   )
@@ -169,7 +170,7 @@ const ErrorNotification = ({errorMessage}) => {
 const Person = ({name, number, handleAction}) => {
   return(
     <div>
-      <span>{name} {number}</span> 
+      <span>{name} {number} </span> 
       <button onClick={handleAction}>delete</button>
     </div>
   )
@@ -194,12 +195,13 @@ const Form = ({addPerson, newName, handleName, newNumber, handleNumber}) => {
   return(
     <form onSubmit = {addPerson}>
         <div>
-          name: <input value={newName} 
+          Name: <input value={newName} 
                   onChange = {handleName}
                 />
         </div>
+        <br></br>
         <div>
-          number: <input value={newNumber}
+          Number: <input value={newNumber}
                   onChange={handleNumber}
           />
         </div>
