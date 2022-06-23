@@ -26,7 +26,7 @@ const App = () => {
       }
     }
     axios
-      .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`)
+      .get(`https://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`)
       .then(response => {
         setWeather(response.data)
         console.log(weather)
